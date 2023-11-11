@@ -36,13 +36,12 @@
 
 ​	提供一站式管理界面，可以“供方管理”页面管理预约提供方，在“用户管理”界面管理预约请求方，在“系统日志”查询日志记录，但此日志是用户日志或供方创建预约日志，无法看到供方用户的详细数据。
 
-![预约管理方](E:\NengYuYue\Documents\photo\预约管理方.png)
-
+![预约管理方](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/预约管理方.png)
 ### 2.2、预约提供方需求
 
 ​	提供预约场地，可预约时间段，预约容量等。管理员可以在“新建预约”界面随时添加新的场地，并设置场地可用的时间段和容量，可以在“预约管理”界面实时查看预约情况、预约用户等信息，可以在“个人中心”中修改供方基本信息等。
 
-![预约提供方](E:\NengYuYue\Documents\photo\预约提供方.png)
+![预约提供方](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/预约提供方.png)
 
 ### 2.3、预约请求方需求
 
@@ -52,25 +51,25 @@
 
 ### 3.1、总体结构
 
-![系统体系](E:\NengYuYue\Documents\photo\系统体系.png)
+![系统体系](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/系统体系.png)
 
 ### 3.2、系统功能结构图
 
-![系统功能结构图](E:\NengYuYue\Documents\photo\系统功能结构图.png)
+![系统功能结构图](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/系统功能结构图.png)
 
 ### 3.3、开发流程设计
 
-![开发流程设计](E:\NengYuYue\Documents\photo\开发流程设计.png)
+![开发流程设计](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/开发流程设计.png)
 
 ## 四、数据可设计
 
 ### 4.1、用户数据库表
 
-![用户表](E:\NengYuYue\Documents\photo\用户表.png)
+![用户表](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/用户表.png)
 
 ### 4.2、可预约场所信息
 
-![预约实体](E:\NengYuYue\Documents\photo\预约实体.png)
+![预约实体](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/预约实体.png)
 
 ​	分为两个表，一个表记录可预约场次信息，另一个表（可预约场所信息（分段））以可预约场次ID为主键，有多个具体时间段的预约信息，预约量和剩余容量。
 
@@ -80,7 +79,7 @@
 
 ​	表1：记录当前正在进行的预约信息
 
-![预约信息日志](E:\NengYuYue\Documents\photo\预约信息日志.png)
+![预约信息日志](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/预约信息日志.png)
 
 ​	表2：记录历史预约信息
 
@@ -88,11 +87,11 @@
 
 ## 五、代码开发
 
-![image-20231109210100708](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231109210100708.png)
+![image-20231109210100708](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231109210100708.png)
 
 目前分成两个Module，一个common放一些公用数据，例如用户表；一个maneuver是具体的活动、预约逻辑等。
 
-![image-20231109210217905](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231109210217905.png)
+![image-20231109210217905](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231109210217905.png)
 
 ## 六、业务难点
 
@@ -102,29 +101,29 @@
 
 扣减库存操作：
 
-![image-20231109214425472](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231109214425472.png)
+![image-20231109214425472](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231109214425472.png)
 
-![](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231109214402311.png)
+![](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231109214402311.png)
 
-![image-20231109213740303](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231109213740303.png)
+![image-20231109213740303](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231109213740303.png)
 
 使用python测试
 
-![image-20231109213827310](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231109213827310.png)
+![image-20231109213827310](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231109213827310.png)
 
 上述代码大致意思如下：请求活动9072d9c502e547629f476630dc852ae3，分段ID10029，用户是从20100往上递增的，迭代1000次，使用了多线程处理
 
 看测试结果：
 
-![image-20231109213945317](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231109213945317.png)
+![image-20231109213945317](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231109213945317.png)
 
 这是截取的片段，1000个请求全部成功，也都存到了temp_booking_log表中
 
-![image-20231109214029318](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231109214029318.png)
+![image-20231109214029318](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231109214029318.png)
 
 但是：
 
-​	![image-20231109214057940](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231109214057940.png)
+​	![image-20231109214057940](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231109214057940.png)
 
 库存只扣减了101个，但是有1000个人都说自己预约成功了，离谱！
 
@@ -132,21 +131,21 @@
 
 扣减之前，先检查一下剩余库存是否等于之前的库存
 
-![image-20231109214246654](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231109214246654.png)
+![image-20231109214246654](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231109214246654.png)
 
 看python测试记录：
 
-![image-20231109214613006](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231109214613006.png)
+![image-20231109214613006](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231109214613006.png)
 
 零星的，有几个成功的，有几个失败的
 
 看日志存储了多少个，可以看到有101个记录（加上乐观锁之后我就截断了temp_booking_log表）
 
-![image-20231109214657878](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231109214657878.png)
+![image-20231109214657878](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231109214657878.png)
 
 理论上库存应该还剩99个（容量200），让我们看一下数据库
 
-![image-20231109214755720](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231109214755720.png)
+![image-20231109214755720](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231109214755720.png)
 
 没毛病，但是，成功率感人
 
@@ -154,17 +153,17 @@
 
 预约流程：
 
-![活动预约流程](E:\NengYuYue\Documents\photo\活动预约流程.png)
+![活动预约流程](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/活动预约流程.png)
 
 取消预约流程：
 
-![取消预约流程](E:\NengYuYue\Documents\photo\取消预约流程.png)
+![取消预约流程](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/取消预约流程.png)
 
 以上流程会出现超量预约的情况，因为多个操作无法保证原子性，因此需要重构
 
 下面为可行案例：
 
-![活动预约流程](E:\NengYuYue\Documents\photo\活动预约流程.png)
+![活动预约流程](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/活动预约流程.png)
 
 详细说明：
 
@@ -198,9 +197,9 @@ public boolean hasValueInSet(String key, String value){
 
 3、检验是否有此活动的分段 && 当前时间是否已超过最大时间：当给一个活动创建分段时，会将分段信息存入Mysql和Redis中。Redis中存储了两个内容，一个是存储内容信息String结构，一个是用于预约扣减库存的Hash结构。
 
-![image-20231111161927750](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231111161927750.png)
+![image-20231111161927750](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231111161927750.png)
 
-![image-20231111162021602](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231111162021602.png)
+![image-20231111162021602](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231111162021602.png)
 
 ```Java
 ManeuverSegment maneuverSegment = maneuverSegmentService.getManeuverSegment(bookingInfo.getManeuverId(), bookingInfo.getSegmentId());
@@ -274,27 +273,27 @@ rocketMQTemplate.syncSend("addTempBookingLog1", tempBookingLog);
 
 1、预约已经过期的分段：
 
-![image-20231111162727645](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231111162727645.png)
+![image-20231111162727645](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231111162727645.png)
 
-![image-20231111162743221](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231111162743221.png)
+![image-20231111162743221](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231111162743221.png)
 
 控制台为空，可以看到没有操作打到MySQL数据库上
 
 2、正常预约没过期的分段：
 
-![image-20231111162933192](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231111162933192.png)
+![image-20231111162933192](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231111162933192.png)
 
 可以看到成功200个，失败1800个
 
-![image-20231111163009310](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231111163009310.png)
+![image-20231111163009310](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231111163009310.png)
 
 Mysql数据库产生200条记录
 
-![image-20231111163049653](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231111163049653.png)
+![image-20231111163049653](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231111163049653.png)
 
 Redis出现200条记录
 
-![image-20231111163123949](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231111163123949.png)
+![image-20231111163123949](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231111163123949.png)
 
 Redis缓存中可用容量变为0
 
@@ -306,25 +305,25 @@ Redis缓存中可用容量变为0
 
 同一个用户，预约同一个活动的同一时间段，1000个线程测试
 
-![image-20231111163839022](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231111163839022.png)
+![image-20231111163839022](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231111163839022.png)
 
 可以发现，这个用户预约了四次，显然我们是不能让这种情况发生的
 
-![image-20231111163929381](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231111163929381.png)
+![image-20231111163929381](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231111163929381.png)
 
 数据库产生了四条记录
 
-![image-20231111164001696](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231111164001696.png)
+![image-20231111164001696](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231111164001696.png)
 
 Redis缓存也被扣了四个
 
-![image-20231111164026426](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231111164026426.png)
+![image-20231111164026426](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231111164026426.png)
 
 但是Redis的记录就是一个，哈哈，因为他是Set，不然他也会有四个
 
 ### 6.3、实现预约功能幂等性
 
-![image-20231111164833223](C:\Users\Hao\AppData\Roaming\Typora\typora-user-images\image-20231111164833223.png)
+![image-20231111164833223](https://github.com/Cool-baby/BookingSystem/blob/0a3eaf56cf12a7e58f51c83353652d9a8faa7fa5/resources/photo/image-20231111164833223.png)
 
 解决方案：同样我们可以借助解决超预约情况，我们不先查用户是否预约过，也就是不先去Redis的日志Set中查有没有预约过，然后再根据查出来的结果执行后面的语句。我们直接就把此用户ID插入到Redis的Set日志中，如果插入成功了，那我们就执行预约，如果插入失败了，那就说明已经有别的线程再执行预约了，直接给用户返回预约失败结果即可。如果后面预约失败（没有库存了），那我们就把这个用户从Set中移除掉就行了。
 
