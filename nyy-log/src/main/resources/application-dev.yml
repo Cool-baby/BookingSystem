@@ -1,0 +1,23 @@
+# 开发环境
+# 发布端口
+server:
+  port: 8081
+
+spring:
+  # 数据库配置(共用一个数据库，就不分库了)
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.164.100:3306/nengyuyue?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: hao19990519
+
+# RocketMQ
+rocketmq:
+  name-server: 192.168.164.100:9876
+  producer:
+    group: group1
+
+#日志配置
+logging:
+  level:
+    com.hao: debug
