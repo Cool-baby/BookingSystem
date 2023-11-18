@@ -30,10 +30,10 @@ public class ManeuverTest {
     void saveManeuver(){
         String uuid = IdUtil.simpleUUID();
 
-        LocalDateTime startTime = LocalDateTime.of(2023, 11, 11, 7, 0, 0);
-        LocalDateTime endTime = LocalDateTime.of(2023, 11, 11, 23, 0, 0);
-        Maneuver maneuver = new Maneuver(null, uuid, "南区女001浴室预约", "洗澡预约", startTime, endTime, 6400L, "女");
-        maneuverService.newManeuver(maneuver);
+        LocalDateTime startTime = LocalDateTime.of(2023, 11, 19, 7, 0, 0);
+        LocalDateTime endTime = LocalDateTime.of(2023, 11, 19, 23, 0, 0);
+        Maneuver maneuver = new Maneuver(null, uuid, "南区男001浴室预约", "洗澡预约", startTime, endTime, 6400L, "男");
+        maneuverService.saveManeuver(maneuver);
     }
 
     @Test

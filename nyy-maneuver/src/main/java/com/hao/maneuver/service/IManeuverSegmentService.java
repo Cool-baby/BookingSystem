@@ -19,7 +19,7 @@ public interface IManeuverSegmentService extends IService<ManeuverSegment> {
      * @param maneuverSegmentList 分段信息
      * @return boolean
      */
-    boolean addSegmentForManeuver(String maneuverId, List<ManeuverSegment> maneuverSegmentList);
+    boolean saveSegmentForManeuver(String maneuverId, List<ManeuverSegment> maneuverSegmentList);
 
     /**
      * 通过活动ID和分段ID获取分段活动信息

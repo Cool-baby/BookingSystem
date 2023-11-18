@@ -19,7 +19,7 @@ public interface IManeuverService extends IService<Maneuver> {
      * @param maneuver 新活动
      * @return boolean
      */
-    boolean newManeuver(Maneuver maneuver);
+    boolean saveManeuver(Maneuver maneuver);
 
     /**
      * 获取全部的Maneuver

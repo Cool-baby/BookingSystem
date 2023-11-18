@@ -4,12 +4,16 @@ import cn.hutool.core.util.StrUtil;
 import com.hao.common.domain.dto.Result;
 import com.hao.common.domain.other.RedisKey;
 import com.hao.log.domain.po.TempBookingLog;
-import com.hao.maneuver.domain.po.Maneuver;
-import com.hao.maneuver.domain.po.ManeuverSegment;
 import com.hao.maneuver.domain.vo.BookingInfo;
 import com.hao.maneuver.service.IBookingService;
 import com.hao.maneuver.service.IManeuverSegmentService;
 import com.hao.maneuver.service.IManeuverService;
+import com.hao.maneuver.util.checkLink.bookingCheck.CheckInfo;
+import com.hao.maneuver.util.checkLink.bookingCheck.CheckLink;
+import com.hao.maneuver.util.checkLink.bookingCheck.CheckStatus;
+import com.hao.maneuver.util.checkLink.bookingCheck.impl.ManeuverCheckLink;
+import com.hao.maneuver.util.checkLink.bookingCheck.impl.RuleCheckLink;
+import com.hao.maneuver.util.checkLink.bookingCheck.impl.SegmentCheckLink;
 import com.hao.maneuver.util.redis.RedisCache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,29 +60,19 @@ public class BookingServiceImpl implements IBookingService {
         * 预约服务流程
         *   1、检验是否有此活动 && 当前时间在规定时间内；
         *   2、判断用户是否有资格参加此活动；
-        *   3、检验是否有此活动的分段 && 当前时间是否已超过最大时间 && 检验此分段活动是否有剩余容量；
+        *   3、检验是否有此活动的分段 && 当前时间是否已超过最大时间；
         *   4、检验用户是否已经预约过此活动；
         *   5、扣减容量；（考虑高并发）
         *   6、记录或更新日志
         * */
-        // 1、检验是否有此活动 && 当前时间在规定时间内
-        Maneuver maneuver = maneuverService.getManeuver(bookingInfo.getManeuverId());
-        if(maneuver == null){
-            return Result.filed("没有此活动！");
-        }
-        if(!(nowTime.isAfter(maneuver.getStartTime()) && nowTime.isBefore(maneuver.getEndTime()))){
-            return Result.filed("活动已过期！");
-        }
+        // 1、检验是否有此活动 && 当前时间在规定时间内；2、判断用户是否有资格参加此活动；3、检验是否有此活动的分段 && 当前时间是否已超过最大时间；
+        CheckLink checkLink = new ManeuverCheckLink("活动有效性检查", maneuverService)
+                .appendNext(new RuleCheckLink("规则检查")
+                        .appendNext(new SegmentCheckLink("活动分段有效性检查", maneuverSegmentService)));
 
-        // 2、TODO 判断用户是否有资格参加此活动
-
-        // 3、检验是否有此活动的分段 && 当前时间是否已超过最大时间
-        ManeuverSegment maneuverSegment = maneuverSegmentService.getManeuverSegment(bookingInfo.getManeuverId(), bookingInfo.getSegmentId());
-        if(maneuverSegment == null){
-            return Result.filed("没有此时间段的活动！");
-        }
-        if(maneuverSegment.getEndTime().isBefore(nowTime)){
-            return Result.filed("此阶段的活动已过期！");
+        CheckInfo checkInfo = checkLink.doCheck(userId, bookingInfo);
+        if (!checkInfo.getStatus().equals(CheckStatus.SUCCESS)){
+            return Result.filed(checkInfo.getInfo());
         }
 
         // 4、检验用户是否已经预约过此活动，直接往Redis的Set中存，能存进去说明还没预约，存不进去说明已经预约了

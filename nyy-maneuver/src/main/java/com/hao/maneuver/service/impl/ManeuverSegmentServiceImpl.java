@@ -29,7 +29,7 @@ public class ManeuverSegmentServiceImpl extends ServiceImpl<ManeuverSegmentMappe
     // 给Maneuver添加分段信息，并进行预热
     @Override
     @Transactional
-    public boolean addSegmentForManeuver(String maneuverId, List<ManeuverSegment> maneuverSegmentList) {
+    public boolean saveSegmentForManeuver(String maneuverId, List<ManeuverSegment> maneuverSegmentList) {
 
         // 1、批量存入数据库
         boolean flag = this.saveBatch(maneuverSegmentList);
@@ -76,33 +76,33 @@ public class ManeuverSegmentServiceImpl extends ServiceImpl<ManeuverSegmentMappe
     // 通过maneuverId获取其全部的分段信息
     @Override
     public List<ManeuverSegment> getAllManeuverSegment(String maneuverId) {
-        List<ManeuverSegment> maneuverSegmentList = new ArrayList<>();
+        List<ManeuverSegment> maneuverSegmentListFromRedis = new ArrayList<>();
         // 1、先去读Redis
-        String key = RedisKey.MANEUVER_SEGMENT_KEY + maneuverId;
-        long sizeFromRedis = redisCache.getHashSize(key);
-        // 1.1、判断是否有此数据
-        if(sizeFromRedis != 0){
-            Set<Object> allKeysFromRedis = redisCache.getHashKeys(key);
-            for(Object mapKey:allKeysFromRedis){
-                // 1.2、读出ManeuverSegment
-                ManeuverSegment maneuverSegment = JSONUtil.toBean((String) redisCache.getHashValue(key, (String) mapKey), ManeuverSegment.class);
-                // 1.3、读出最新的可用容量并赋值
-                Long newFreeCapacity = getNewFreeCapacity(maneuverId, maneuverSegment.getSegmentId());
-                maneuverSegment.setFreeCapacity(newFreeCapacity);
-                maneuverSegmentList.add(maneuverSegment);
-            }
-            maneuverSegmentList.sort(Comparator.comparing(ManeuverSegment::getSegmentId)); // 排序
-            return maneuverSegmentList;
+        String segmentKey = RedisKey.MANEUVER_SEGMENT_KEY + maneuverId;
+        String bookingKey = RedisKey.MANEUVER_BOOKING_KEY + maneuverId;
+        // 2、获取redis中的键值对
+        Map<Object, Object> segmentEntries = redisCache.getHashAllEntry(segmentKey);
+        Map<Object, Object> bookingEntries = redisCache.getHashAllEntry(bookingKey);
+
+        if (!segmentEntries.isEmpty() && !bookingEntries.isEmpty()) {
+            segmentEntries.forEach((k, v) -> {
+                ManeuverSegment maneuverSegment = JSONUtil.toBean((String) v, ManeuverSegment.class);
+                Long freeCapacity = Long.parseLong((String) bookingEntries.get(k));
+                maneuverSegment.setFreeCapacity(freeCapacity);
+                maneuverSegmentListFromRedis.add(maneuverSegment);
+            });
+            maneuverSegmentListFromRedis.sort(Comparator.comparingLong(ManeuverSegment::getSegmentId));
+            return maneuverSegmentListFromRedis;
         }
         // 2、如果没有，去MySQL读取
-        maneuverSegmentList = this.lambdaQuery().eq(ManeuverSegment::getManeuverId, maneuverId).list();
+        List<ManeuverSegment> maneuverSegmentListFromMySQL = this.lambdaQuery().eq(ManeuverSegment::getManeuverId, maneuverId).list();
 
         // 3、写回Redis
-        for(ManeuverSegment maneuverSegment:maneuverSegmentList){
-            redisCache.putToHash(key, String.valueOf(maneuverSegment.getSegmentId()), maneuverSegment);
+        for(ManeuverSegment maneuverSegment:maneuverSegmentListFromMySQL){
+            redisCache.putToHash(segmentKey, String.valueOf(maneuverSegment.getSegmentId()), maneuverSegment);
         }
 
-        return maneuverSegmentList;
+        return maneuverSegmentListFromMySQL;
     }
 
     // 从Redis中读出最新的可用容量

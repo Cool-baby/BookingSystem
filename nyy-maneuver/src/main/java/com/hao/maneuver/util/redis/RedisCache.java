@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -100,8 +101,22 @@ public class RedisCache {
         return redisTemplate.opsForHash().size(key);
     }
 
+    /**
+     * 获取Hash所有的Key
+     * @param key 键
+     * @return Set<Object>
+     */
     public Set<Object> getHashKeys(String key){
         return redisTemplate.opsForHash().keys(key);
+    }
+
+    /**
+     * 获取Hash所有键值对
+     * @param key 键
+     * @return Map<Object, Object>
+     */
+    public Map<Object, Object> getHashAllEntry(String key){
+        return redisTemplate.opsForHash().entries(key);
     }
 
     /**

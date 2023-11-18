@@ -347,3 +347,116 @@ if(tryBooking < 0){
 
 通过多次测试，此方法可以解决幂等性问题。
 
+### 6.4、使用责任链模式改进预约校验
+
+改进前：
+
+```java
+Maneuver maneuver = maneuverService.getManeuver(bookingInfo.getManeuverId());
+if(maneuver == null){
+	return Result.filed("没有此活动！");
+}
+if(!(nowTime.isAfter(maneuver.getStartTime()) && nowTime.isBefore(maneuver.getEndTime()))){
+	return Result.filed("活动已过期！");
+}
+// 2、TODO 判断用户是否有资格参加此活动
+
+// 3、检验是否有此活动的分段 && 当前时间是否已超过最大时间
+ManeuverSegment maneuverSegment = maneuverSegmentService.getManeuverSegment(bookingInfo.getManeuverId(), bookingInfo.getSegmentId());
+if(maneuverSegment == null){
+	return Result.filed("没有此时间段的活动！");
+}
+if(maneuverSegment.getEndTime().isBefore(nowTime)){
+	return Result.filed("此阶段的活动已过期！");
+}
+
+```
+
+很多if判断，混乱，且后续再加新的检验，不方便
+
+改进办法：
+
+1、创建活动校验责任链抽象类，有名称和校验方法
+
+```java
+public abstract class CheckLink {
+
+    // 名称
+    private final String checkListName;
+
+    // 下一检查链
+    private CheckLink next;
+
+    public CheckLink(String checkListName) {
+        this.checkListName = checkListName;
+    }
+
+    public CheckLink next(){
+        return next;
+    }
+
+    /**
+     * 检查方法
+     * @param userId 用户ID
+     * @param bookingInfo 预约信息
+     * @return CheckInfo
+     */
+    public abstract CheckInfo doCheck(String userId, BookingInfo bookingInfo);
+
+    /**
+     * 添加下一检查链
+     * @param next 下一检查链
+     * @return CheckLink
+     */
+    public CheckLink appendNext(CheckLink next){
+        this.next = next;
+        return this;
+    }
+
+    /**
+     * 获取名称
+     * @return String
+     */
+    public String getCheckListName(){
+        return checkListName;
+    }
+}
+```
+
+2、自定义多级检验链，例如1、*活动有效性检查*；2、规则检查；3、分段有效性检查等；
+
+仅拿规则检查为例：
+
+```Java
+@Slf4j
+public class RuleCheckLink extends CheckLink {
+
+    public RuleCheckLink(String checkListName) {
+        super(checkListName);
+    }
+
+    @Override
+    public CheckInfo doCheck(String userId, BookingInfo bookingInfo) {
+
+        // TODO 规则校验
+        log.info(getCheckListName() + " pass");
+
+        CheckLink next = super.next();
+        if (next == null) {
+            return new CheckInfo(CheckStatus.SUCCESS, "校验通过！");
+        }
+
+        return next.doCheck(userId, bookingInfo);
+    }
+}
+```
+
+3、然后将原本很多if的语句替换成：
+
+```Java
+CheckLink checkLink = new ManeuverCheckLink("活动有效性检查", maneuverService)
+                .appendNext(new RuleCheckLink("规则检查")
+                        .appendNext(new SegmentCheckLink("活动分段有效性检查", maneuverSegmentService)));
+```
+
+可以看到，非常的方便

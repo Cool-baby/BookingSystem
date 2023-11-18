@@ -34,7 +34,7 @@ public class ManeuverServiceImpl extends ServiceImpl<ManeuverMapper, Maneuver> i
 
     // 新建活动并预热
     @Override
-    public boolean newManeuver(Maneuver maneuver) {
+    public boolean saveManeuver(Maneuver maneuver) {
 
         // 校验数据
         if(maneuver == null || StrUtil.isBlank(maneuver.getManeuverId())){

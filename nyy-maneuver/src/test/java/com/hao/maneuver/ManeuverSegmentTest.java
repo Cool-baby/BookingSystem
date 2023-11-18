@@ -1,21 +1,20 @@
 package com.hao.maneuver;
 
-import cn.hutool.core.util.IdUtil;
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONUtil;
 import com.hao.common.domain.other.RedisKey;
 import com.hao.maneuver.domain.dto.ManeuverDTO;
-import com.hao.maneuver.domain.po.Maneuver;
 import com.hao.maneuver.domain.po.ManeuverSegment;
 import com.hao.maneuver.service.IManeuverSegmentService;
 import com.hao.maneuver.service.IManeuverService;
-import com.hao.maneuver.util.redis.RedisCache;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import javax.jws.Oneway;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Hao
@@ -37,9 +36,9 @@ public class ManeuverSegmentTest {
     @Test
     void saveManeuverSegment(){
 
-        String maneuverId = "7d7b63a896754161b05bf1aa50d079e1";
+        String maneuverId = "003e7863a42b418299e08d5d4a3bff30";
 
-        LocalDateTime startTime = LocalDateTime.of(2023, 11, 11, 7, 0, 0);
+        LocalDateTime startTime = LocalDateTime.of(2023, 11, 19, 7, 0, 0);
 
         long allCapacity = 6400L;
         int allSegment = 32;
@@ -56,7 +55,7 @@ public class ManeuverSegmentTest {
             startTime = temp;
         }
 
-        maneuverSegmentService.addSegmentForManeuver(maneuverId, maneuverSegmentList);
+        maneuverSegmentService.saveSegmentForManeuver(maneuverId, maneuverSegmentList);
     }
 
     // 缓存预热
@@ -81,5 +80,46 @@ public class ManeuverSegmentTest {
         ManeuverSegment maneuverSegment = maneuverSegmentService.getManeuverSegment(maneuverId, segmentId);
 
         System.out.println(maneuverSegment);
+    }
+
+    @Test
+    void getManeuverDTO(){
+        String maneuverId = "003e7863a42b418299e08d5d4a3bff30";
+        List<ManeuverSegment> maneuverSegmentList = new ArrayList<>();
+
+        String segmentKey = RedisKey.MANEUVER_SEGMENT_KEY + maneuverId;
+        String bookingKey = RedisKey.MANEUVER_BOOKING_KEY + maneuverId;
+
+        Map<Object, Object> segmentEntries = redisTemplate.opsForHash().entries(segmentKey);
+        Map<Object, Object> bookingEntries = redisTemplate.opsForHash().entries(bookingKey);
+
+        segmentEntries.forEach((k, v) -> {
+            ManeuverSegment maneuverSegment = JSONUtil.toBean((String) v, ManeuverSegment.class);
+            Long freeCapacity = Long.parseLong((String) bookingEntries.get(k));
+            maneuverSegment.setFreeCapacity(freeCapacity);
+            maneuverSegmentList.add(maneuverSegment);
+        });
+
+        Collections.sort(maneuverSegmentList, Comparator.comparing(ManeuverSegment::getSegmentId));
+        System.out.println(maneuverSegmentList);
+    }
+
+    @Test
+    void testInnClass() throws InterruptedException {
+
+        Integer number = 1;
+        List<Integer> linkedList = new LinkedList<>();
+        List<Integer> arrayList = new ArrayList<>();
+
+        Thread thread = new Thread(() -> {
+            linkedList.add(number);
+            arrayList.add(number);
+        });
+
+        thread.start();
+        thread.join();
+
+        System.out.println(linkedList);
+        System.out.println(arrayList);
     }
 }
