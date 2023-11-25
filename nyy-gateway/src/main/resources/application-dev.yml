@@ -1,0 +1,33 @@
+# 开发环境
+# 发布端口
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/users/**
+        - id: maneuver-service
+          uri: lb://maneuver-service
+          predicates:
+            - Path=/maneuvers/**
+    nacos:
+      server-addr: 192.168.164.100:8848
+
+# 放行登录
+nyy:
+  auth:
+    excludePaths:
+      - POST:/users/login
+
+#日志配置
+logging:
+  level:
+    com.hao: debug
+

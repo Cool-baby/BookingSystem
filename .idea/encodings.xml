@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/maneuver/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nyy-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nyy-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nyy-log/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nyy-maneuver/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/nyy-user/src/main/java" charset="UTF-8" />

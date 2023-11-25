@@ -1,8 +1,9 @@
-package com.hao.maneuver;
+package com.hao.user;
 
 import cn.hutool.crypto.digest.DigestUtil;
-import com.hao.common.domain.po.User;
-import com.hao.common.service.IUserService;
+import com.hao.common.util.JWTUtil;
+import com.hao.user.domain.po.User;
+import com.hao.user.service.IUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,14 +13,23 @@ import java.util.ArrayList;
 /**
  * @author Hao
  * @program: nengyuyue
- * @description: 测试User
- * @date 2023-11-09 16:15:13
+ * @description: User测试
+ * @date 2023-11-25 20:27:09
  */
 @SpringBootTest
 public class UserTest {
 
     @Autowired
     private IUserService userService;
+
+    @Test
+    void testToken(){
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMDIzMDAwMCIsImV4cCI6MTcwMDk1MTIwNCwianRpIjoiMmEyZDkzODEtZWViNy00ZDI3LTg4NjctMTY3MGVmYjU1YWVhIn0.VdqbwEyJwGRoC4sXYfC2_fkNtU1OLENAUGi2ZVMLxkY";
+        String userIDByToken = JWTUtil.getUserIDByToken(token);
+        System.out.println(userIDByToken);
+    }
+
+
 
     @Test
     void saveUser(){
@@ -123,5 +133,4 @@ public class UserTest {
 
         return state + "市" + city + "区" + street + houseNumber + "号";
     }
-
 }

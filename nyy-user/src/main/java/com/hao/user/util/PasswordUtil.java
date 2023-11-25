@@ -1,4 +1,4 @@
-package com.hao.common.util;
+package com.hao.user.util;
 
 import cn.hutool.crypto.digest.DigestUtil;
 

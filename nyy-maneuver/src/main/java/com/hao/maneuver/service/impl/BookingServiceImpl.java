@@ -3,6 +3,7 @@ package com.hao.maneuver.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.hao.common.domain.dto.Result;
 import com.hao.common.domain.other.RedisKey;
+import com.hao.common.domain.other.TokenInfo;
 import com.hao.log.domain.po.TempBookingLog;
 import com.hao.maneuver.domain.vo.BookingInfo;
 import com.hao.maneuver.service.IBookingService;
@@ -49,10 +50,7 @@ public class BookingServiceImpl implements IBookingService {
         if(bookingInfo == null || StrUtil.isBlank(bookingInfo.getManeuverId())){
             return Result.filed("请求信息错误！");
         }
-        String userId = httpServletRequest.getHeader("userId"); // 这里简单的用请求头的userId作为身份，没有使用token
-        if(StrUtil.isBlank(userId)){
-            return Result.filed("请先登录！");
-        }
+        String userId = httpServletRequest.getHeader(TokenInfo.USER_INFO_INSIDE); // 这里简单的用请求头的userId作为身份，没有使用token
 
         // 获取当前时间
         LocalDateTime nowTime = LocalDateTime.now();
@@ -106,10 +104,7 @@ public class BookingServiceImpl implements IBookingService {
         if(bookingInfo == null || StrUtil.isBlank(bookingInfo.getManeuverId())){
             return Result.filed("请求信息错误！");
         }
-        String userId = httpServletRequest.getHeader("userId"); // 这里简单的用请求头的userId作为身份，没有使用token
-        if(StrUtil.isBlank(userId)){
-            return Result.filed("请先登录！");
-        }
+        String userId = httpServletRequest.getHeader(TokenInfo.USER_INFO_INSIDE); // 这里简单的用请求头的userId作为身份，没有使用token
 
         /*
         * 取消预约流程

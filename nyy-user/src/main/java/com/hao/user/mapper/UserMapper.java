@@ -1,7 +1,7 @@
-package com.hao.common.mapper;
+package com.hao.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.hao.common.domain.po.User;
+import com.hao.user.domain.po.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -36,9 +36,9 @@ public class ManeuverSegmentTest {
     @Test
     void saveManeuverSegment(){
 
-        String maneuverId = "003e7863a42b418299e08d5d4a3bff30";
+        String maneuverId = "90dff4e760eb4aa5b587b958ae5c53a2";
 
-        LocalDateTime startTime = LocalDateTime.of(2023, 11, 19, 7, 0, 0);
+        LocalDateTime startTime = LocalDateTime.of(2023, 12, 1, 7, 0, 0);
 
         long allCapacity = 6400L;
         int allSegment = 32;
