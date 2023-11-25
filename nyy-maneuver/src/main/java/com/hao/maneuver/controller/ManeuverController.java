@@ -44,14 +44,14 @@ public class ManeuverController {
     }
 
     @PostMapping("/booking")
-    public Result bookingManeuver(HttpServletRequest httpServletRequest, @RequestBody BookingInfo bookingInfo){
+    public Result bookingManeuver(@RequestBody BookingInfo bookingInfo){
 
-        return bookingService.bookingManeuver(httpServletRequest, bookingInfo);
+        return bookingService.bookingManeuver(bookingInfo);
     }
 
     @PostMapping("/cancel")
-    public Result cancelBooking(HttpServletRequest httpServletRequest, @RequestBody BookingInfo bookingInfo){
+    public Result cancelBooking(@RequestBody BookingInfo bookingInfo){
 
-        return bookingService.cancelBooking(httpServletRequest, bookingInfo);
+        return bookingService.cancelBooking(bookingInfo);
     }
 }

@@ -3,7 +3,7 @@ package com.hao.maneuver.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.hao.common.domain.dto.Result;
 import com.hao.common.domain.other.RedisKey;
-import com.hao.common.domain.other.TokenInfo;
+import com.hao.common.util.UserContext;
 import com.hao.log.domain.po.TempBookingLog;
 import com.hao.maneuver.domain.vo.BookingInfo;
 import com.hao.maneuver.service.IBookingService;
@@ -22,7 +22,6 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 /**
@@ -44,13 +43,13 @@ public class BookingServiceImpl implements IBookingService {
     // 预约活动服务
     @Override
     @Transactional
-    public Result bookingManeuver(HttpServletRequest httpServletRequest, BookingInfo bookingInfo) {
+    public Result bookingManeuver(BookingInfo bookingInfo) {
 
         // 前置校验
         if(bookingInfo == null || StrUtil.isBlank(bookingInfo.getManeuverId())){
             return Result.filed("请求信息错误！");
         }
-        String userId = httpServletRequest.getHeader(TokenInfo.USER_INFO_INSIDE); // 这里简单的用请求头的userId作为身份，没有使用token
+        String userId = UserContext.getUser(); // 这里从ThreadLocal获取UserID
 
         // 获取当前时间
         LocalDateTime nowTime = LocalDateTime.now();
@@ -99,12 +98,12 @@ public class BookingServiceImpl implements IBookingService {
     // 取消预约
     @Override
     @Transactional
-    public Result cancelBooking(HttpServletRequest httpServletRequest, BookingInfo bookingInfo) {
+    public Result cancelBooking(BookingInfo bookingInfo) {
 
         if(bookingInfo == null || StrUtil.isBlank(bookingInfo.getManeuverId())){
             return Result.filed("请求信息错误！");
         }
-        String userId = httpServletRequest.getHeader(TokenInfo.USER_INFO_INSIDE); // 这里简单的用请求头的userId作为身份，没有使用token
+        String userId = UserContext.getUser(); // 这里从ThreadLocal获取UserID
 
         /*
         * 取消预约流程

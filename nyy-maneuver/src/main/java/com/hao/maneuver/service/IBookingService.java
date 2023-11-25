@@ -19,7 +19,7 @@ public interface IBookingService {
      * @param bookingInfo 预约目标
      * @return Result 结果
      */
-    Result bookingManeuver(HttpServletRequest httpServletRequest, BookingInfo bookingInfo);
+    Result bookingManeuver(BookingInfo bookingInfo);
 
     /**
      * 取消预约
@@ -27,5 +27,5 @@ public interface IBookingService {
      * @param bookingInfo 预约目标
      * @return Result 结果
      */
-    Result cancelBooking(HttpServletRequest httpServletRequest, BookingInfo bookingInfo);
+    Result cancelBooking(BookingInfo bookingInfo);
 }
