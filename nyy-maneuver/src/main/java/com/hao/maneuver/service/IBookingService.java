@@ -3,8 +3,6 @@ package com.hao.maneuver.service;
 import com.hao.common.domain.dto.Result;
 import com.hao.maneuver.domain.vo.BookingInfo;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Hao
  * @program: nengyuyue
@@ -15,7 +13,6 @@ public interface IBookingService {
 
     /**
      * 预约活动服务
-     * @param httpServletRequest 请求头
      * @param bookingInfo 预约目标
      * @return Result 结果
      */
@@ -23,7 +20,6 @@ public interface IBookingService {
 
     /**
      * 取消预约
-     * @param httpServletRequest 请求头
      * @param bookingInfo 预约目标
      * @return Result 结果
      */
