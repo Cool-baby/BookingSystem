@@ -21,7 +21,7 @@ import java.util.UUID;
 public class JWTUtil {
 
     // 时间毫秒数，token有效期（Token过期时间设置为10小时）
-    private static long time = 1000*60*60*10;
+    private static final long time = 1000*60*60*10;
     // 签名
     private static final String signature = "NYY_System";
 
@@ -32,7 +32,7 @@ public class JWTUtil {
      */
     public static String createToken(String userID){
         JwtBuilder jwtBuilder = Jwts.builder();//构建JWT对象
-        String jwtToken = jwtBuilder
+        return jwtBuilder
                 // Header
                 .setHeaderParam("typ","JWT")
                 .setHeaderParam("alg","HS256")
@@ -45,12 +45,11 @@ public class JWTUtil {
                 .signWith(SignatureAlgorithm.HS256, signature)
                 // compact拼接三部分header、payload、signature
                 .compact();
-        return jwtToken;
     }
 
     /**
      * 通过Token获取用户UserID
-     * @param token
+     * @param token token
      * @return UserID
      */
     public static String getUserIDByToken(String token){
@@ -68,7 +67,7 @@ public class JWTUtil {
 
     /**
      * 检测Token是否有效
-     * @param token
+     * @param token token
      * @return Boolean
      */
     public static Boolean checkToken(String token){

@@ -1,6 +1,5 @@
 package com.hao.maneuver;
 
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
 import com.hao.common.domain.other.RedisKey;
 import com.hao.maneuver.domain.dto.ManeuverDTO;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
-import javax.jws.Oneway;
 import java.time.LocalDateTime;
 import java.util.*;
 

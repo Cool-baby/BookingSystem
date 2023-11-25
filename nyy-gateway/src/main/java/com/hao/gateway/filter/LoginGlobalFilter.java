@@ -57,7 +57,7 @@ public class LoginGlobalFilter implements GlobalFilter, Ordered {
         if (headers != null) token = headers.get(0);
 
         // 4、解析token
-        String userId = null;
+        String userId;
         userId = JWTUtil.getUserIDByToken(token);
         if (StrUtil.isBlank(userId)) {
             ServerHttpResponse response = exchange.getResponse();

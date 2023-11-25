@@ -4,7 +4,6 @@ import com.hao.common.domain.dto.Result;
 import com.hao.user.domain.vo.LoginVO;
 import com.hao.user.service.IUserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
